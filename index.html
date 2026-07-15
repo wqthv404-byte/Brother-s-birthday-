@@ -557,10 +557,12 @@
         </button>
     </header>
 
-    <!-- Audio Element (Put 'birthday-song.mp3' in your repository root) -->
-    <audio id="bdaySong" loop>
-        <source src="birthday-song.mp3" type="audio/mpeg">
-    </audio>
+    <!-- Audio Element (Put 'birthday-song.mp4' in your repository root) -->
+    
+    <video id="bdayMedia" loop style="display:none;">
+        <source src="birthday-song.mp4" type="video/mp4">
+    </video>
+    
 
     <!-- Hero Header -->
     <section class="hero-section">
@@ -674,28 +676,28 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <script>
-        // --- 1. Audio Control ---
-        const audio = document.getElementById('bdaySong');
-        const playBtn = document.getElementById('playBtn');
-        const musicIcon = document.getElementById('musicIcon');
-        const musicText = document.getElementById('musicText');
+        // --- Updated Audio/Video Control ---
+       const media = document.getElementById('bdayMedia');
+       const playBtn = document.getElementById('playBtn');
+       const musicIcon = document.getElementById('musicIcon');
+       const musicText = document.getElementById('musicText');
+function toggleMusic() {
+    if (media.paused) {
+        media.play().then(() => {
+            playBtn.classList.add('playing');
+            musicIcon.className = "fa-solid fa-pause";
+            musicText.innerText = "Pause Music";
+        }).catch(err => {
+            console.log("Media play blocked.", err);
+        });
+    } else {
+        media.pause();
+        playBtn.classList.remove('playing');
+        musicIcon.className = "fa-solid fa-play";
+        musicText.innerText = "Play Music";
+    }
+}
 
-        function toggleMusic() {
-            if (audio.paused) {
-                audio.play().then(() => {
-                    playBtn.classList.add('playing');
-                    musicIcon.className = "fa-solid fa-pause";
-                    musicText.innerText = "Pause Music";
-                }).catch(err => {
-                    console.log("Audio play blocked by browser settings.", err);
-                });
-            } else {
-                audio.pause();
-                playBtn.classList.remove('playing');
-                musicIcon.className = "fa-solid fa-play";
-                musicText.innerText = "Play Music";
-            }
-        }
 
         // --- 2. Floating Yellow Balloons Generator ---
         const colors = ['#f4c430', '#ffd700', '#fffbeb', '#e1b12c', '#f7d070'];
